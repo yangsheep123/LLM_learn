@@ -10,12 +10,12 @@ class MyModule(nn.Module):
         self.linear = nn.Linear(dim,1)
         
 
-    # def forward(self,x):
-    #     # 要调用forward函数，使用module(inputs)
-    #     return torch.sigmoid(self.linear(x))
+    def forward(self,x):
+        # 要调用forward函数，使用module(inputs)
+        return torch.sigmoid(self.linear(x))
 
-    def forward(self, x):
-        return self.linear(x)  # 不加 sigmoid
+    # def forward(self, x):
+    #     return self.linear(x)  # 不加 sigmoid
     
 class MyData(Dataset):
     def __init__(self,file_path):
@@ -72,10 +72,10 @@ for i in range(epoch):
     for feature,label in DataLoader(train_data,batch_size = 256,shuffle = True):
         optimizer.zero_grad()
         outputs = module(feature).squeeze()
-        # correct += torch.sum(((outputs>=0.5)==label))
-        correct += torch.sum(((torch.sigmoid(outputs) >= 0.5) == label))
-        # loss = torch.nn.functional.binary_cross_entropy(outputs,label)
-        loss = torch.nn.functional.binary_cross_entropy_with_logits(outputs, label)
+        correct += torch.sum(((outputs>=0.5)==label))
+        # correct += torch.sum(((torch.sigmoid(outputs) >= 0.5) == label))
+        loss = torch.nn.functional.binary_cross_entropy(outputs,label)
+        # loss = torch.nn.functional.binary_cross_entropy_with_logits(outputs, label)
         total_loss += loss.item()
         loss.backward()
         # 优化器对训练参数进行梯度更新
