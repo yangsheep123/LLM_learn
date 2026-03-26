@@ -28,6 +28,7 @@ trg_seq = [F.pad(trg,(0,max(trg_lens)-L)) for trg,L in zip(trg_seq,trg_lens)]
 # 再将列表中的多个tensor拼成一个tensor
 src_seq = torch.cat([src.unsqueeze(0) for src in src_seq],dim=0)
 trg_seq = torch.cat([trg.unsqueeze(0) for trg in trg_seq],dim=0)
+print(src_seq.shape)
 
 # step2 构造word embedding
 # +1表示还有一个pad符号
